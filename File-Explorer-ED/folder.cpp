@@ -1,6 +1,6 @@
 #include "folder.h"
 
-Folder::Folder(string n, string r)
+Folder::Folder(string n, string r):Archivo(n,r,"Folder")
 {
     nombre = n;
     ruta = r;
