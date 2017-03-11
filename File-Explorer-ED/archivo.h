@@ -8,9 +8,9 @@ using namespace std;
 class Archivo
 {
 public:
-    Archivo();
-    string tipo;
-    string nombre;
+    Archivo(string nombre,string ruta,string tipo);
+
+    string tipo,nombre,ruta;
     int code;
     Archivo * sig;
     Archivo * ant;

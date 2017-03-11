@@ -1,6 +1,6 @@
 #include "folder.h"
 
-Folder::Folder(string n, string r)
+Folder::Folder(string n, string r):Archivo(n,r,"Folder")
 {
     nombre = n;
     ruta = r;
@@ -19,12 +19,12 @@ string Folder::getRuta(){
 
 Archivo * Folder::add(Archivo *arch){
     if(cant == 0){
-        this->inicio = arch;
+        list->inicio = arch;
         cant++;
         return arch;
     }
     else{
-        Archivo * temp = this->inicio;
+        Archivo * temp = list->inicio;
         for(int a = 0; a<cant; a++){
             if(temp == NULL){
                 temp = arch;
@@ -39,7 +39,7 @@ Archivo * Folder::add(Archivo *arch){
 }
 
 void Folder::erase(Archivo *arch){
-    Archivo * temp = this->inicio;
+    Archivo * temp = list->inicio;
     for(int a = 0; a<cant; a++){
         if(temp->nombre == arch->nombre){
             while(temp->sig !=NULL){

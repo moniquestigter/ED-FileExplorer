@@ -1,3 +1,4 @@
+
 #include "fsu.h"
 
 FSU::FSU()
@@ -58,7 +59,7 @@ int FSU::eliminarArchivo(int pos, Folder * donde){
 QList<Archivo*> FSU::listarArchivos(Folder *donde)
 {
    QList<Archivo*> list;
-   Archivo * temp = donde->inicio;
+   Archivo * temp = donde->list->inicio;
    for(int a = 0; a < donde->cant; a++){
        list.insert(a,temp);
        temp = temp->sig;

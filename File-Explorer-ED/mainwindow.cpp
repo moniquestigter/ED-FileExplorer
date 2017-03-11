@@ -128,6 +128,7 @@ void MainWindow::on_btNuevo_clicked()
         labels.append(nom);
 
         QInputDialog * contenido = new QInputDialog();
+
         nom->show();
     }
     else if(nuevoMsgBox.clickedButton() == cancelBt){
