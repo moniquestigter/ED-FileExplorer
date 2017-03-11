@@ -13,6 +13,7 @@ Archivo * FSU::cargarArchivo(int pos, Folder *donde){
         return temp->sig;
     else{
        for(int a = 0; a < pos; a++){
+
            temp = temp->sig;
        }
        return temp;
@@ -63,7 +64,7 @@ QList<Archivo*> FSU::listarArchivos(Folder *donde)
 {
    QList<Archivo*> list;
    Archivo * temp = donde->list->inicio;
-   for(int a = 0; a < donde->cant; a++){
+   for(int a = 0; a < donde->list->longiLista; a++){
        list.append(temp);
        temp = temp->sig;
    }
