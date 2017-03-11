@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     inicial = new Folder("root","root/");
     api = new FSU();
     actual = inicial;
+    path = actual->getRuta();
 
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
@@ -205,6 +206,9 @@ void MainWindow::openFolder(){
             Folder * nuevoActual = reinterpret_cast<Folder*>(temp);
             actual = nuevoActual;
             refresh();
+            string p = actual->nombre + "/";
+            string pathActual = path + p;
+            ui->vistaPath->setText(pathActual.c_str());
        }
        else if(msgBox.clickedButton()==eliminarBt)
            eliminar();
