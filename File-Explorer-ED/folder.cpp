@@ -19,27 +19,33 @@ string Folder::getRuta(){
 
 Archivo * Folder::add(Archivo *arch){
     if(cant == 0){
-        this->inicio = arch;
+        list->inicio = arch;
+        cant++;
+        return arch;
+    }
+    else if(cant == 1){
+        list->inicio->sig = arch;
+        arch->ant = list->inicio;
         cant++;
         return arch;
     }
     else{
-        Archivo * temp = this->inicio;
+        Archivo * temp = list->inicio;
         for(int a = 0; a<cant; a++){
-            if(temp == NULL){
-                temp = arch;
-                temp->ant = arch->ant;
-                cant++;
-                return arch;;
+            while(temp->sig != NULL){
+                temp = temp->sig;
              }
-             temp = temp->sig;
+            temp = arch;
+            temp->ant = arch->ant;
+            cant++;
+            return arch;;
          }
      }
     return NULL;
 }
 
 void Folder::erase(Archivo *arch){
-    Archivo * temp = this->inicio;
+    Archivo * temp = list->inicio;
     for(int a = 0; a<cant; a++){
         if(temp->nombre == arch->nombre){
             while(temp->sig !=NULL){

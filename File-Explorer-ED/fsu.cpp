@@ -7,10 +7,16 @@ FSU::FSU()
 
 Archivo * FSU::cargarArchivo(int pos, Folder *donde){
     Archivo * temp = donde->list->inicio;
+    if(pos == 0)
+        return temp;
+    else if(pos == 1)
+        return temp->sig;
+    else{
        for(int a = 0; a < pos; a++){
            temp = temp->sig;
        }
        return temp;
+    }
 }
 
 Archivo * FSU::crearArchivo(Folder *donde, string nomArchivo, string tipo){
@@ -19,14 +25,12 @@ Archivo * FSU::crearArchivo(Folder *donde, string nomArchivo, string tipo){
         Folder * nuevo= new Folder(nomArchivo, donde->getRuta());
         nuevoArchivo= (Archivo*)nuevo;
         nuevoArchivo->tipo = tipo;
-        nuevoArchivo->code = 1;
         donde->add(nuevoArchivo);
      }
     else{
         ArchivoText * nuevo = new ArchivoText(nomArchivo,donde->getRuta());
         Archivo * nuevoArchivo = (Archivo*)nuevo;
         nuevoArchivo->tipo = tipo;
-        nuevoArchivo->code = 2;
         donde->add(nuevoArchivo);
     }
     return nuevoArchivo;
@@ -58,9 +62,9 @@ int FSU::eliminarArchivo(int pos, Folder * donde){
 QList<Archivo*> FSU::listarArchivos(Folder *donde)
 {
    QList<Archivo*> list;
-   Archivo * temp = donde->inicio;
+   Archivo * temp = donde->list->inicio;
    for(int a = 0; a < donde->cant; a++){
-       list.insert(a,temp);
+       list.append(temp);
        temp = temp->sig;
    }
    return list;

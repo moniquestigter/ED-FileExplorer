@@ -154,6 +154,7 @@ void MainWindow::wipe(){
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
     cantFiles = cantFolders = 0;
+    cantTotFiles = cantTotFolders = 0;
 }
 
 void MainWindow::eliminar(){
