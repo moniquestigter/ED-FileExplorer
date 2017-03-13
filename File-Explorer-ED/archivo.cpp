@@ -18,4 +18,8 @@ string Archivo::getPath(){
     return ruta;
 }
 
+string Archivo::getTipo(){
+    return tipo;
+}
+
 

@@ -7,10 +7,10 @@ FSU::FSU()
 
 Archivo * FSU::cargarArchivo(int pos, Folder *donde){
     Archivo * temp = donde->list->inicio;
-    for(int a = 0; a <pos; a++){
+    for(int a = 0; a < pos; a++){
         temp = temp->sig;
     }
-       return temp;
+    return temp;
 }
 
 Archivo * FSU::crearArchivo(Folder *donde, string nomArchivo, string tipo){
