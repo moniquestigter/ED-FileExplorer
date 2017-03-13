@@ -15,12 +15,12 @@ class ArchivoText : public Archivo
 public:
     ArchivoText(string nombre, string ruta);
     ~ArchivoText();
-    string nombre;
-    string ruta;
     string contenido;
     void setContenido(string contenido);
+    string getName();
+    string getPath();
+    string getTipo();
 
-    QLabel nom;
 
 
 

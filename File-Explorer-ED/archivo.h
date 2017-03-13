@@ -10,9 +10,13 @@ class Archivo
 public:
     Archivo(string nombre, string ruta, string tipo);
     string tipo,ruta,nombre;
-    int code;
     Archivo * sig;
     Archivo * ant;
+protected:
+    string getName();
+    string getPath();
+    string getTipo();
+
 };
 
 #endif // ARCHIVO_H

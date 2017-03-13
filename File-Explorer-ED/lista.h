@@ -11,15 +11,7 @@ class Lista
 {
 public:
     Lista();
-
-    Archivo * agregar(Archivo * arch);
-    void eliminar(Archivo * arch);
-    Archivo * buscar(string ruta);
-
     Archivo * inicio;
-
-
-    int longiLista;
 };
 
 #endif // LISTA_H

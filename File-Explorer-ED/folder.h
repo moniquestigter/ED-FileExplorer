@@ -17,17 +17,14 @@ class Folder: public Archivo
 public:
     Folder(string nombre, string ruta);
     ~Folder();
-    string nombre;
-    string ruta;
-    string getRuta();
+    string getName();
+    string getPath();
+    string getTipo();
     Lista * list;
     Archivo* add(Archivo * arch);
     void erase(Archivo * arch);
     int cant;
 
-    Archivo * inicio;
-
-    QLabel nom;
 };
 
 #endif // FOLDER_H

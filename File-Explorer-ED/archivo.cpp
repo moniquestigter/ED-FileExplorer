@@ -9,3 +9,13 @@ Archivo::Archivo(string n,string r,string t)
     ant = NULL;
 
 }
+
+string Archivo::getName(){
+    return nombre;
+}
+
+string Archivo::getPath(){
+    return ruta;
+}
+
+

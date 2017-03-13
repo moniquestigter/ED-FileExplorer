@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     inicial = new Folder("root","root/");
     api = new FSU();
     actual = inicial;
-    path = actual->getRuta();
+    path = actual->getPath();
 
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
@@ -184,8 +184,8 @@ void MainWindow::prueba(){
 void MainWindow::refresh(){
     wipe();
     QList <Archivo*> temp = api->listarArchivos(actual);
-    for(int a = 0; a < actual->list->longiLista; a++){
-        if(temp.at(a)->code == 1){
+    for(int a = 0; a < actual->cant; a++){
+        if(temp.at(a)->tipo == "Folder"){
             addFolder(temp.at(a)->nombre);
         }
         else{
