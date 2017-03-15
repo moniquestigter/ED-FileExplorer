@@ -22,20 +22,20 @@ string Folder::getTipo(){
     return Folder::getTipo();
 }
 
-Archivo * Folder::add(Archivo *arch){
+Archivo * Folder::add(Archivo *arch, Folder * donde){
     if(cant == 0){
-        this->list->inicio = arch;
+        donde->list->inicio = arch;
         cant++;
         return arch;
     }
     else if(cant == 1){
-        list->inicio->sig = arch;
-        arch->ant = list->inicio;
+        donde->list->inicio->sig = arch;
+        arch->ant = donde->list->inicio;
         cant++;
         return arch;
     }
     else{
-        Archivo * temp = this->list->inicio;
+        Archivo * temp = donde->list->inicio;
         for(int a = 0; a<cant; a++){
             while(temp->sig != NULL){
                 temp = temp->sig;
@@ -49,8 +49,8 @@ Archivo * Folder::add(Archivo *arch){
     return NULL;
 }
 
-void Folder::erase(Archivo *arch){
-    Archivo * temp = this->list->inicio;
+void Folder::erase(Archivo *arch,Folder * donde){
+    Archivo * temp = donde->list->inicio;
     for(int a = 0; a<cant; a++){
         if(temp->nombre == arch->nombre){
             while(temp->sig !=NULL){

@@ -19,13 +19,13 @@ Archivo * FSU::crearArchivo(Folder *donde, string nomArchivo, string tipo){
         Folder * nuevo = new Folder(nomArchivo, donde->getPath());
         nuevoArchivo= (Archivo*)nuevo;
         nuevoArchivo->tipo = tipo;
-        donde->add(nuevoArchivo);
+        donde->add(nuevoArchivo,donde);
      }
     else{
         ArchivoText * nuevo = new ArchivoText(nomArchivo,donde->getPath());
         Archivo * nuevoArchivo = (Archivo*)nuevo;
         nuevoArchivo->tipo = tipo;
-        donde->add(nuevoArchivo);
+        donde->add(nuevoArchivo,donde);
     }
     return nuevoArchivo;
 }
@@ -68,7 +68,7 @@ void FSU::copiar(int pos, Folder *donde, Folder *destino){
     Archivo * temp = destino->list->inicio;
     Archivo * copiar = cargarArchivo(pos,donde);
     for(int a = 0; a < destino->cant; a++){
-        destino->add(copiar);
+        destino->add(copiar,donde);
         crearArchivo(destino,copiar->nombre,copiar->tipo);
     }
 }

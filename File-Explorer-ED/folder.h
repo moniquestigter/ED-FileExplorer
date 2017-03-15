@@ -9,7 +9,6 @@
 #include <QWidget>
 #include "archivo.h"
 #include "lista.h"
-
 using namespace std;
 
 class Folder: public Archivo
@@ -21,8 +20,8 @@ public:
     string getPath();
     string getTipo();
     Lista * list;
-    Archivo* add(Archivo * arch);
-    void erase(Archivo * arch);
+    Archivo* add(Archivo * arch, Folder * donde);
+    void erase(Archivo * arch, Folder * donde);
     int cant;
 
 };
