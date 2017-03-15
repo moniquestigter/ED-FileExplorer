@@ -103,12 +103,12 @@ void MainWindow::on_btNuevo_clicked()
             string def = "Folder" + std::to_string(cantFolders++);
             nom->setText(def.c_str());
             addFolder(def);
-            api->crearArchivo(inicial,def,"Folder");
+            api->crearArchivo(actual,def,"Folder");
         }
         else{
             nom->setText(name);
             addFolder(name.toStdString());
-            api->crearArchivo(inicial,name.toStdString(),"Folder");
+            api->crearArchivo(actual,name.toStdString(),"Folder");
         }
         labels.append(nom);
         nom->show();
@@ -123,13 +123,13 @@ void MainWindow::on_btNuevo_clicked()
             string nomCompleto = def + ".txt";
             nom->setText(nomCompleto.c_str());
             addArchivo(nomCompleto);
-            api->crearArchivo(inicial,nomCompleto,"Archivo");
+            api->crearArchivo(actual,nomCompleto,"Archivo");
         }
         else {
             string nomCompleto = name.toStdString() + ".txt";
             nom->setText(nomCompleto.c_str());
             addArchivo(nomCompleto);
-            api->crearArchivo(inicial,nomCompleto,"Archivo");
+            api->crearArchivo(actual,nomCompleto,"Archivo");
         }
 
         labels.append(nom);
@@ -209,15 +209,14 @@ void MainWindow::openFolder(){
      QAbstractButton * copyBt = msgBox.addButton(tr("Copiar"), QMessageBox::YesRole);
     QAbstractButton * cancelBt = msgBox.addButton(tr("Cancelar"),QMessageBox::NoRole);
     msgBox.exec();
-
        if(msgBox.clickedButton()==openBt){
             Archivo * temp = api->cargarArchivo(getPos(),actual);
             Folder * nuevoActual = reinterpret_cast<Folder*>(temp);
             actual = nuevoActual;
             refresh();
             string p = actual->nombre + "/";
-            string pathActual = path + p;
-            ui->vistaPath->setText(pathActual.c_str());
+            path = path+p;
+            ui->vistaPath->setText(path.c_str());
        }
        else if(msgBox.clickedButton()==eliminarBt)
            eliminar();
