@@ -13,9 +13,10 @@
 #include <QMessageBox>
 #include <QGraphicsProxyWidget>
 #include <QList>
-#include <QRect>
+#include <QTreeView>
 #include <iostream>
 #include "fsu.h"
+#include "treemodel.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ public:
 
     QList<QPushButton*> botones;
     QList<QLabel*> labels;
+    QTreeView * view;
 
     void escribir();
     int getPos();
@@ -52,6 +54,7 @@ public:
     void addFolder(string nom);
     void copyFile();
     void copyFolder();
+
 
 private slots:
     void on_btNuevo_clicked();

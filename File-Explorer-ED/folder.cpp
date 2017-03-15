@@ -23,26 +23,26 @@ string Folder::getTipo(){
 }
 
 Archivo * Folder::add(Archivo *arch, Folder * donde){
-    if(cant == 0){
+    if(donde->cant == 0){
         donde->list->inicio = arch;
-        cant++;
+        donde->cant++;
         return arch;
     }
-    else if(cant == 1){
+    else if(donde->cant == 1){
         donde->list->inicio->sig = arch;
         arch->ant = donde->list->inicio;
-        cant++;
+        donde->cant++;
         return arch;
     }
     else{
         Archivo * temp = donde->list->inicio;
-        for(int a = 0; a<cant; a++){
+        for(int a = 0; a<donde->cant; a++){
             while(temp->sig != NULL){
                 temp = temp->sig;
              }
             temp = arch;
             temp->ant = arch->ant;
-            cant++;
+            donde->cant++;
             return arch;;
          }
      }

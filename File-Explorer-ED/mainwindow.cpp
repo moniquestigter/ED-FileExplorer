@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     api = new FSU();
     actual = inicial;
     path = actual->getPath();
+    view = ui->treeView;
 
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
@@ -46,6 +47,7 @@ void MainWindow::addFolder(string nom){
     folder->setStyleSheet("border-image:url(:/new/prefix1/folder.png);");
     folder->setGeometry(posxFolder,posYFolder,75,80);
     botones.insert(cantTotFolders,folder);
+    TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
     posxLabel = posxFolder;
@@ -56,6 +58,8 @@ void MainWindow::addFolder(string nom){
         posYLabel+=90;
     }
     folder->show();
+    view->setModel(model);
+    view->show();
     connect(botones.at(cantTotFolders), SIGNAL (released()),this, SLOT(openFolder()));
     cantTotFolders++;
 
@@ -66,7 +70,7 @@ void MainWindow::addArchivo(string nom){
     file->setStyleSheet("border-image:url(:/new/prefix1/file.png);");
     file->setGeometry(posxFolder,posYFolder,75,80);
     botones.insert(cantTotFiles,file);
-
+    TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
     posxLabel = posxFolder;
@@ -76,6 +80,8 @@ void MainWindow::addArchivo(string nom){
         posxLabel = posxFolder;
         posYLabel+=90;
     }
+    view->setModel(model);
+    view->show();
     file->show();
     connect(botones.at(cantTotFiles), SIGNAL (released()),this, SLOT(prueba()));
     cantTotFiles++;
@@ -127,7 +133,6 @@ void MainWindow::on_btNuevo_clicked()
         }
 
         labels.append(nom);
-
         QInputDialog * contenido = new QInputDialog();
         nom->show();
     }

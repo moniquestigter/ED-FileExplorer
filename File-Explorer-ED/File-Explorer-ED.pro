@@ -29,14 +29,18 @@ SOURCES += main.cpp\
     folder.cpp \
     lista.cpp \
     archivotext.cpp \
-    archivo.cpp
+    archivo.cpp \
+    treeitem.cpp \
+    treemodel.cpp
 
 HEADERS  += mainwindow.h \
     fsu.h \
     folder.h \
     lista.h \
     archivotext.h \
-    archivo.h
+    archivo.h \
+    treeitem.h \
+    treemodel.h
 
 FORMS    += mainwindow.ui
 
