@@ -50,6 +50,8 @@ public:
     void eliminar();
     void addArchivo(string nom);
     void addFolder(string nom);
+    void copyFile();
+    void copyFolder();
 
 private slots:
     void on_btNuevo_clicked();

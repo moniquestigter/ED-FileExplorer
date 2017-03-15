@@ -64,3 +64,12 @@ QList<Archivo*> FSU::listarArchivos(Folder *donde)
    return lista;
 }
 
+void FSU::copiar(int pos, Folder *donde, Folder *destino){
+    Archivo * temp = destino->list->inicio;
+    Archivo * copiar = cargarArchivo(pos,donde);
+    for(int a = 0; a < destino->cant; a++){
+        destino->add(copiar);
+        crearArchivo(destino,copiar->nombre,copiar->tipo);
+    }
+}
+

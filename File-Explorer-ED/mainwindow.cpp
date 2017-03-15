@@ -160,13 +160,14 @@ void MainWindow::wipe(){
 
 void MainWindow::eliminar(){
     api->eliminarArchivo(getPos(),actual);
-    wipe();
+    refresh();
 }
 
 void MainWindow::prueba(){
     QMessageBox msgBox;
     QAbstractButton * openBt = msgBox.addButton(tr("Abrir"), QMessageBox::YesRole);
     QAbstractButton * editBt = msgBox.addButton(tr("Editar"), QMessageBox::YesRole);
+    QAbstractButton * copyBt = msgBox.addButton(tr("Copiar"), QMessageBox::YesRole);
     QAbstractButton * eliminarBt = msgBox.addButton(tr("Eliminar"), QMessageBox::YesRole);
     QAbstractButton * cancelBt = msgBox.addButton(tr("Cancelar"),QMessageBox::NoRole);
     msgBox.exec();
@@ -175,6 +176,8 @@ void MainWindow::prueba(){
         read();
     else if(msgBox.clickedButton()==editBt)
         escribir();
+    else if(msgBox.clickedButton()==copyBt)
+        msgBox.close();
     else if(msgBox.clickedButton()==eliminarBt)
         eliminar();
     else if(msgBox.clickedButton()==cancelBt)
@@ -198,6 +201,7 @@ void MainWindow::openFolder(){
     QMessageBox msgBox;
     QAbstractButton * openBt = msgBox.addButton(tr("Abrir"), QMessageBox::YesRole);
     QAbstractButton * eliminarBt = msgBox.addButton(tr("Eliminar"), QMessageBox::YesRole);
+     QAbstractButton * copyBt = msgBox.addButton(tr("Copiar"), QMessageBox::YesRole);
     QAbstractButton * cancelBt = msgBox.addButton(tr("Cancelar"),QMessageBox::NoRole);
     msgBox.exec();
 
@@ -212,6 +216,8 @@ void MainWindow::openFolder(){
        }
        else if(msgBox.clickedButton()==eliminarBt)
            eliminar();
+       else if(msgBox.clickedButton() == copyBt)
+           msgBox.close();
        else if(msgBox.clickedButton()==cancelBt)
            msgBox.close();
 }

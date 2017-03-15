@@ -18,8 +18,10 @@ public:
     QList<Archivo*> listarArchivos(Folder * donde);
     Archivo * cargarArchivo(int pos, Folder * donde);
     int eliminarArchivo(int pos,Folder * donde);
-    void copiar(string rutaOrigen, string rutaDestino);
+    void copiar(int pos, Folder * donde, Folder * destino);
     Folder * root;
+
+private:
 
 };
 
