@@ -21,7 +21,6 @@ public:
     string getTipo();
     Lista * list;
     Archivo* add(Archivo * arch, Folder * donde);
-    void erase(Archivo * arch, Folder * donde);
     int cant;
 
 };

@@ -54,6 +54,10 @@ public:
     void addFolder(string nom);
     void copyFile();
     void copyFolder();
+    void label(string nom);
+
+    void menu();
+    void actions();
 
 
 private slots:
@@ -62,6 +66,7 @@ private slots:
 
     void prueba();
     void openFolder();
+    QString askName();
 
 
 private:

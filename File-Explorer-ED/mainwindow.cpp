@@ -3,6 +3,7 @@
 
 #include <QMouseEvent>
 #include <QEvent>
+#include <QAction>
 #include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -39,6 +40,18 @@ int MainWindow::getPos(){
            }
        }
        return -1;
+}
+
+QString MainWindow::askName(){
+     return QInputDialog::getText(this,"Nuevo ","Ingrese el Nombre:");
+}
+
+void MainWindow::label(string name){
+    QLabel * nom = new QLabel(this);
+    nom->setGeometry(posxLabel,posYLabel+40,75,85);
+    nom->setText(name.c_str());
+    labels.append(nom);
+    nom->show();
 }
 
 void MainWindow::addFolder(string nom){
@@ -96,45 +109,35 @@ void MainWindow::on_btNuevo_clicked()
     nuevoMsgBox.exec();
 
     if(nuevoMsgBox.clickedButton() == folderBt){
-        QLabel * nom = new QLabel(this);
-        nom->setGeometry(posxLabel,posYLabel+40,75,85);
-        QString name = QInputDialog::getText(this,"Nuevo ","Ingrese el Nombre:");
+        QString name = askName();
         if(name == ""){
             string def = "Folder" + std::to_string(cantFolders++);
-            nom->setText(def.c_str());
+            label(def);
             addFolder(def);
             api->crearArchivo(actual,def,"Folder");
         }
         else{
-            nom->setText(name);
+            label(name.toStdString());
             addFolder(name.toStdString());
             api->crearArchivo(actual,name.toStdString(),"Folder");
         }
-        labels.append(nom);
-        nom->show();
-
     }
     else if(nuevoMsgBox.clickedButton() == fileBt){
-        QLabel * nom = new QLabel(this);
-        nom->setGeometry(posxLabel,posYLabel+40,75,85);
-        QString name = QInputDialog::getText(this,"Nuevo ","Ingrese el Nombre:");
+        QString name = askName();
         if(name == ""){
             string def = "Archivo" + std::to_string(cantFiles++);
             string nomCompleto = def + ".txt";
-            nom->setText(nomCompleto.c_str());
+            label(nomCompleto);
             addArchivo(nomCompleto);
             api->crearArchivo(actual,nomCompleto,"Archivo");
         }
         else {
             string nomCompleto = name.toStdString() + ".txt";
-            nom->setText(nomCompleto.c_str());
+            label(nomCompleto);
             addArchivo(nomCompleto);
             api->crearArchivo(actual,nomCompleto,"Archivo");
         }
-
-        labels.append(nom);
         QInputDialog * contenido = new QInputDialog();
-        nom->show();
     }
     else if(nuevoMsgBox.clickedButton() == cancelBt){
         nuevoMsgBox.close();
@@ -199,6 +202,7 @@ void MainWindow::refresh(){
         else{
              addArchivo(temp.at(a)->nombre);
         }
+        label(temp.at(a)->nombre);
     }
 }
 
@@ -234,3 +238,10 @@ void MainWindow::read(){
     msgBox.setText(text.c_str());
     msgBox.exec();
 }
+
+void MainWindow::actions(){
+    QAction * action = ui->menuNuevo->actions().first();
+    action->connect(action,SIGNAL(triggered()),this,SLOT(askName()));
+}
+
+

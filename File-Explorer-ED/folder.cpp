@@ -39,17 +39,4 @@ Archivo * Folder::add(Archivo *arch, Folder * donde){
     return arch;
 }
 
-void Folder::erase(Archivo *arch,Folder * donde){
-    Archivo * temp = donde->list->inicio;
-    for(int a = 0; a<cant; a++){
-        if(temp->nombre == arch->nombre){
-            while(temp->sig !=NULL){
-                temp->sig->ant = temp->ant;
-                temp->ant->sig = temp->sig;
-            }
-            cant--;
-        }
-        temp = temp->sig;
-    }
-}
 
