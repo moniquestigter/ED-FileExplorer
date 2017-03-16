@@ -16,9 +16,9 @@ public:
     FSU();
     Archivo * crearArchivo(Folder * donde, string nomArchivo,string tipo);
     QList<Archivo*> listarArchivos(Folder * donde);
-    Archivo * cargarArchivo(int pos, Folder * donde);
-    int eliminarArchivo(int pos,Folder * donde);
-    void copiar(int pos, Folder * donde, Folder * destino);
+    Archivo * cargarArchivo(string nom, Folder * donde);
+    int eliminarArchivo(string nom,Folder * donde);
+    /*void copiar(string nom, Folder * donde, Folder * destino);*/
     Folder * root;
 
 private:

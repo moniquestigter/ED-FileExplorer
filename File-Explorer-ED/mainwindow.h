@@ -44,7 +44,7 @@ public:
     QTreeView * view;
 
     void escribir();
-    int getPos();
+    string getNombre();
     void openFile();
     void read();
     void wipe();

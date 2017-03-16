@@ -31,15 +31,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-int MainWindow::getPos(){
+string MainWindow::getNombre(){
     QPushButton * temp = qobject_cast<QPushButton *>(sender());
       if(temp!=NULL){
         for(int a = 0; a < botones.length(); a++){
-            if(botones.at(a) == temp)
-                   return a;
+            if(botones.at(a)->objectName() == temp->objectName())
+                   return temp->objectName().toStdString();
            }
        }
-       return -1;
+       return NULL;
 }
 
 QString MainWindow::askName(){
@@ -51,19 +51,20 @@ void MainWindow::label(string name){
     nom->setGeometry(posxLabel,posYLabel+40,75,85);
     nom->setText(name.c_str());
     labels.append(nom);
+    posxLabel+=100;
     nom->show();
 }
 
 void MainWindow::addFolder(string nom){
     QPushButton * folder = new QPushButton(this);
-
     folder->setStyleSheet("border-image:url(:/new/prefix1/folder.png);");
     folder->setGeometry(posxFolder,posYFolder,75,80);
+    folder->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFolders,folder);
     TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
-    posxLabel = posxFolder;
+
     if(posxFolder>=1120){
         posxFolder = 320;
         posYFolder+= 90;
@@ -82,11 +83,11 @@ void MainWindow::addArchivo(string nom){
     QPushButton * file = new QPushButton(this);
     file->setStyleSheet("border-image:url(:/new/prefix1/file.png);");
     file->setGeometry(posxFolder,posYFolder,75,80);
+    file->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFiles,file);
     TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
-    posxLabel = posxFolder;
     if(posxFolder>=1120){
         posxFolder = 320;
         posYFolder+= 90;
@@ -145,7 +146,7 @@ void MainWindow::on_btNuevo_clicked()
 }
 
 void MainWindow::escribir(){
-    Archivo * temp = api->cargarArchivo(getPos(),actual);
+    Archivo * temp = api->cargarArchivo(getNombre(),actual);
     ArchivoText * file = reinterpret_cast<ArchivoText*>(temp);
     QString cont = QInputDialog::getText(this,tr(file->nombre.c_str()),tr("Escriba su texto: "));
     file->setContenido(cont.toStdString());
@@ -160,14 +161,15 @@ void MainWindow::wipe(){
         botones.removeAt(a);
         labels.removeAt(a);
     }
-    posxFolder = posxLabel = 320;
+    posxFolder = 320;
+    posxLabel = 320;
     posYFolder = posYLabel = 170;
     cantFiles = cantFolders = 0;
     cantTotFiles = cantTotFolders = 0;
 }
 
 void MainWindow::eliminar(){
-    api->eliminarArchivo(getPos(),actual);
+    api->eliminarArchivo(getNombre(),actual);
     refresh();
 }
 
@@ -214,7 +216,7 @@ void MainWindow::openFolder(){
     QAbstractButton * cancelBt = msgBox.addButton(tr("Cancelar"),QMessageBox::NoRole);
     msgBox.exec();
        if(msgBox.clickedButton()==openBt){
-            Archivo * temp = api->cargarArchivo(getPos(),actual);
+            Archivo * temp = api->cargarArchivo(getNombre(),actual);
             Folder * nuevoActual = reinterpret_cast<Folder*>(temp);
             actual = nuevoActual;
             refresh();
@@ -232,7 +234,7 @@ void MainWindow::openFolder(){
 
 void MainWindow::read(){
     QMessageBox msgBox;
-    Archivo * temp = api->cargarArchivo(getPos(),actual);
+    Archivo * temp = api->cargarArchivo(getNombre(),actual);
     ArchivoText * file = reinterpret_cast<ArchivoText*>(temp);
     string text = file->contenido;
     msgBox.setText(text.c_str());
