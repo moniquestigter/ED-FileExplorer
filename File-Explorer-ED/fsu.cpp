@@ -5,11 +5,10 @@ FSU::FSU()
     root = new Folder("root","root/");
 }
 
-Archivo * FSU::cargarArchivo(int pos, Folder *donde){
+Archivo * FSU::cargarArchivo(string nom, Folder *donde){
     Archivo * temp = donde->list->inicio;
-    for(int a = 0; a < pos; a++){
+    while(temp->nombre != nom)
         temp = temp->sig;
-    }
     return temp;
 }
 
@@ -23,15 +22,15 @@ Archivo * FSU::crearArchivo(Folder *donde, string nomArchivo, string tipo){
      }
     else{
         ArchivoText * nuevo = new ArchivoText(nomArchivo,donde->getPath());
-        Archivo * nuevoArchivo = (Archivo*)nuevo;
+        nuevoArchivo = (Archivo*)nuevo;
         nuevoArchivo->tipo = tipo;
         donde->add(nuevoArchivo,donde);
     }
     return nuevoArchivo;
 }
 
-int FSU::eliminarArchivo(int pos, Folder * donde){
-    Archivo * eliminarlo = cargarArchivo(pos,donde);
+int FSU::eliminarArchivo(string nom, Folder * donde){
+    Archivo * eliminarlo = cargarArchivo(nom,donde);
       if(eliminarlo == NULL)
           return -1;
       if(donde->list->inicio == eliminarlo){
@@ -64,9 +63,9 @@ QList<Archivo*> FSU::listarArchivos(Folder *donde)
    return lista;
 }
 
-void FSU::copiar(int pos, Folder *donde, Folder *destino){
+void FSU::copiar(string nom, Folder *donde, Folder *destino){
     Archivo * temp = destino->list->inicio;
-    Archivo * copiar = cargarArchivo(pos,donde);
+    Archivo * copiar = cargarArchivo(nom,donde);
     for(int a = 0; a < destino->cant; a++){
         destino->add(copiar,donde);
         crearArchivo(destino,copiar->nombre,copiar->tipo);
