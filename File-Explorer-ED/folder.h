@@ -16,6 +16,7 @@ class Folder: public Archivo
 public:
     Folder(string nombre, string ruta);
     ~Folder();
+    Folder * anterior;
     string getName();
     string getPath();
     string getTipo();

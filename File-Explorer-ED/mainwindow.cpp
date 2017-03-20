@@ -16,8 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     botones = QList<QPushButton*>();
     labels = QList<QLabel*>();
     ui->vistaPath->setText("root/");
+    ui->btPegar->hide();
     inicial = new Folder("root","root/");
     api = new FSU();
+    ui->btBack->hide();
     actual = inicial;
     path = actual->getPath();
     view = ui->treeView;
@@ -247,8 +249,11 @@ void MainWindow::openFolder(){
        if(msgBox.clickedButton()==openBt){
             Archivo * temp = api->cargarArchivo(getNombre(),actual);
             Folder * nuevoActual = reinterpret_cast<Folder*>(temp);
+            Folder * temp2 = actual;
             actual = nuevoActual;
+            actual->anterior = temp2;
             refresh();
+            ui->btBack->show();
             string p = actual->nombre + "/";
             path = path+p;
             ui->vistaPath->setText(path.c_str());
@@ -284,6 +289,7 @@ void MainWindow::actions(){
 
 void MainWindow::copy(){
     tempCopied = api->copiar(getNombre(),actual);
+    ui->btPegar->show();
 }
 
 void MainWindow::on_btPegar_clicked()
@@ -293,6 +299,18 @@ void MainWindow::on_btPegar_clicked()
   temp->ruta = actual->nombre+tempCopied->nombre+"/";
   api->paste(temp,actual);
   tempCopied = NULL;
+  ui->btPegar->hide();
   refresh();
+
+}
+
+void MainWindow::on_btBack_clicked()
+{
+    Folder * temp = actual;
+    actual = actual->anterior;
+    actual->sig = temp;
+    string p = actual->getPath();
+    ui->vistaPath->setText(QString::fromStdString(p));
+    refresh();
 
 }

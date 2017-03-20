@@ -78,6 +78,8 @@ private slots:
 
     void on_btPegar_clicked();
 
+    void on_btBack_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
