@@ -5,6 +5,7 @@
 #include <QEvent>
 #include <QAction>
 #include <QMenu>
+
 #include "treeitem.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,12 +21,18 @@ MainWindow::MainWindow(QWidget *parent) :
     actual = inicial;
     path = actual->getPath();
     view = ui->treeView;
+    view->setColumnCount(1);
+    view->rootIndex();
+    items = QList<QTreeWidgetItem*>();
+    items.insert(cantItems,new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(QString::fromStdString(actual->nombre)))));
+    padre = items.at(cantItems);
     tempCopied = NULL;
-
+    view->setHeaderItem(items.at(0));
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
     cantFiles = cantFolders = 0;
     cantTotFiles = cantTotFolders = 0;
+    cantItems = 0;
 }
 
 MainWindow::~MainWindow()
@@ -64,6 +71,10 @@ void MainWindow::addFolder(string nom){
     folder->setGeometry(posxFolder,posYFolder,75,80);
     folder->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFolders,folder);
+    QTreeWidgetItem * item = new QTreeWidgetItem();
+    item->setText(0,folder->objectName());
+    padre->addChild(item);
+    items.insert(++cantItems,item);
 
     posxFolder+=100;
 
@@ -86,6 +97,9 @@ void MainWindow::addArchivo(string nom){
     file->setGeometry(posxFolder,posYFolder,75,80);
     file->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFiles,file);
+    QTreeWidgetItem * item = new QTreeWidgetItem();
+    item->setText(0,file->objectName());
+    items.at(cantItems)->addChild(item);
 
     posxFolder+=100;
     if(posxFolder>=1120){
@@ -222,6 +236,13 @@ void MainWindow::openFolder(){
             string p = actual->nombre + "/";
             path = path+p;
             ui->vistaPath->setText(path.c_str());
+            QTreeWidgetItem * nuevo;
+            for(int a = 0; a<=cantItems; a++){
+                if(items.at(a)->text(0) == QString::fromStdString(actual->nombre)){
+                    nuevo = items.at(a);
+                    padre = nuevo;
+                }
+            }
        }
        else if(msgBox.clickedButton()==eliminarBt)
            eliminar();

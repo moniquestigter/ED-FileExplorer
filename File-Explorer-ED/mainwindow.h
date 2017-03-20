@@ -15,6 +15,8 @@
 #include <QList>
 #include <QTreeView>
 #include <QTreeWidgetItem>
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include <iostream>
 #include "fsu.h"
 #include "treemodel.h"
@@ -34,7 +36,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    int posxFolder, posYFolder, posxLabel, posYLabel,cantFolders,cantFiles,cantTotFolders,cantTotFiles;
+    int posxFolder, posYFolder, posxLabel, posYLabel,cantFolders,cantFiles,cantTotFolders,cantTotFiles,cantItems;
     string path;
 
     FSU * api;
@@ -45,6 +47,9 @@ public:
     QList<QPushButton*> botones;
     QList<QLabel*> labels;
     QTreeWidget * view;
+    QTreeModel * model;
+    QList<QTreeWidgetItem*> items;
+    QTreeWidgetItem * padre;
 
     void escribir();
     string getNombre();
