@@ -468,7 +468,20 @@
      <string/>
     </property>
    </widget>
-   <widget class="QTreeView" name="treeView">
+   <widget class="QPushButton" name="btPegar">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>20</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pegar</string>
+    </property>
+   </widget>
+   <widget class="QTreeWidget" name="treeView">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -477,6 +490,11 @@
       <height>651</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

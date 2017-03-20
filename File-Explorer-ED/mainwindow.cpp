@@ -5,6 +5,7 @@
 #include <QEvent>
 #include <QAction>
 #include <QMenu>
+#include "treeitem.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     actual = inicial;
     path = actual->getPath();
     view = ui->treeView;
+    tempCopied = NULL;
 
     posxFolder = posxLabel = 320;
     posYFolder = posYLabel = 170;
@@ -46,6 +48,7 @@ QString MainWindow::askName(){
      return QInputDialog::getText(this,"Nuevo ","Ingrese el Nombre:");
 }
 
+
 void MainWindow::label(string name){
     QLabel * nom = new QLabel(this);
     nom->setGeometry(posxLabel,posYLabel+40,75,85);
@@ -61,7 +64,6 @@ void MainWindow::addFolder(string nom){
     folder->setGeometry(posxFolder,posYFolder,75,80);
     folder->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFolders,folder);
-    TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
 
@@ -72,7 +74,6 @@ void MainWindow::addFolder(string nom){
         posYLabel+=90;
     }
     folder->show();
-    view->setModel(model);
     view->show();
     connect(botones.at(cantTotFolders), SIGNAL (released()),this, SLOT(openFolder()));
     cantTotFolders++;
@@ -85,7 +86,6 @@ void MainWindow::addArchivo(string nom){
     file->setGeometry(posxFolder,posYFolder,75,80);
     file->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFiles,file);
-    TreeModel * model = new TreeModel(QString::fromStdString(nom));
 
     posxFolder+=100;
     if(posxFolder>=1120){
@@ -94,7 +94,6 @@ void MainWindow::addArchivo(string nom){
         posxLabel = posxFolder;
         posYLabel+=90;
     }
-    view->setModel(model);
     view->show();
     file->show();
     connect(botones.at(cantTotFiles), SIGNAL (released()),this, SLOT(prueba()));
@@ -187,7 +186,7 @@ void MainWindow::prueba(){
     else if(msgBox.clickedButton()==editBt)
         escribir();
     else if(msgBox.clickedButton()==copyBt)
-        msgBox.close();
+        copy();
     else if(msgBox.clickedButton()==eliminarBt)
         eliminar();
     else if(msgBox.clickedButton()==cancelBt)
@@ -227,7 +226,7 @@ void MainWindow::openFolder(){
        else if(msgBox.clickedButton()==eliminarBt)
            eliminar();
        else if(msgBox.clickedButton() == copyBt)
-           msgBox.close();
+            copy();
        else if(msgBox.clickedButton()==cancelBt)
            msgBox.close();
 }
@@ -246,4 +245,17 @@ void MainWindow::actions(){
     action->connect(action,SIGNAL(triggered()),this,SLOT(askName()));
 }
 
+void MainWindow::copy(){
+    tempCopied = api->copiar(getNombre(),actual);
+}
 
+void MainWindow::on_btPegar_clicked()
+{
+  Archivo * temp = tempCopied;
+  temp->nombre = tempCopied->nombre;
+  temp->ruta = actual->nombre+tempCopied->nombre+"/";
+  api->paste(temp,actual);
+  tempCopied = NULL;
+  refresh();
+
+}

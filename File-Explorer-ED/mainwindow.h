@@ -14,9 +14,11 @@
 #include <QGraphicsProxyWidget>
 #include <QList>
 #include <QTreeView>
+#include <QTreeWidgetItem>
 #include <iostream>
 #include "fsu.h"
 #include "treemodel.h"
+#include "treeitem.h"
 
 using namespace std;
 
@@ -38,10 +40,11 @@ public:
     FSU * api;
     Folder * inicial;
     Folder * actual;
+    Archivo * tempCopied;
 
     QList<QPushButton*> botones;
     QList<QLabel*> labels;
-    QTreeView * view;
+    QTreeWidget * view;
 
     void escribir();
     string getNombre();
@@ -52,8 +55,7 @@ public:
     void eliminar();
     void addArchivo(string nom);
     void addFolder(string nom);
-    void copyFile();
-    void copyFolder();
+    void copy();
     void label(string nom);
 
     void menu();
@@ -68,6 +70,8 @@ private slots:
     void openFolder();
     QString askName();
 
+
+    void on_btPegar_clicked();
 
 private:
     Ui::MainWindow *ui;

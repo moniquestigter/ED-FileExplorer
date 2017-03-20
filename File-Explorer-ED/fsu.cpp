@@ -63,12 +63,23 @@ QList<Archivo*> FSU::listarArchivos(Folder *donde)
    return lista;
 }
 
-void FSU::copiar(string nom, Folder *donde, Folder *destino){
-    Archivo * temp = destino->list->inicio;
+Archivo * FSU::copiar(string nom, Folder *donde){
     Archivo * copiar = cargarArchivo(nom,donde);
-    for(int a = 0; a < destino->cant; a++){
-        destino->add(copiar,donde);
-        crearArchivo(destino,copiar->nombre,copiar->tipo);
+    if(copiar->tipo == "Folder"){
+        Folder * folder = reinterpret_cast<Folder*>(copiar);
+        Folder * nuevo = new Folder(folder->getName(),folder->getPath());
+        return nuevo;
     }
+    else{
+        ArchivoText * file = reinterpret_cast<ArchivoText*>(copiar);
+        ArchivoText * nuevo = new ArchivoText(file->getName(),file->getPath());
+        nuevo->setContenido(file->contenido);
+        return nuevo;
+    }
+    return NULL;
+}
+
+void FSU::paste(Archivo * arch, Folder *destino){
+   destino->add(arch,destino);
 }
 
