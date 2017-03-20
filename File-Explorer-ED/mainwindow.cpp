@@ -71,10 +71,19 @@ void MainWindow::addFolder(string nom){
     folder->setGeometry(posxFolder,posYFolder,75,80);
     folder->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFolders,folder);
-    QTreeWidgetItem * item = new QTreeWidgetItem();
-    item->setText(0,folder->objectName());
-    padre->addChild(item);
-    items.insert(++cantItems,item);
+    QTreeWidgetItem * item;
+    if(padre->text(0) == "root"){
+        item = new QTreeWidgetItem(view);
+        item->setText(0,folder->objectName());
+    }
+    else{
+        item = new QTreeWidgetItem();
+        item->setText(0,folder->objectName());
+        padre->addChild(item);
+    }
+    items.insert(cantItems++,item);
+
+
 
     posxFolder+=100;
 
@@ -97,9 +106,16 @@ void MainWindow::addArchivo(string nom){
     file->setGeometry(posxFolder,posYFolder,75,80);
     file->setObjectName(QString::fromStdString(nom));
     botones.insert(cantTotFiles,file);
-    QTreeWidgetItem * item = new QTreeWidgetItem();
-    item->setText(0,file->objectName());
-    items.at(cantItems)->addChild(item);
+
+    if(padre->text(0) == "root"){
+        QTreeWidgetItem * item = new QTreeWidgetItem(view);
+        item->setText(0,file->objectName());
+    }
+    else{
+        QTreeWidgetItem * item = new QTreeWidgetItem();
+        item->setText(0,file->objectName());
+        padre->addChild(item);
+    }
 
     posxFolder+=100;
     if(posxFolder>=1120){
